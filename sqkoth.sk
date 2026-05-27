@@ -1,0 +1,180 @@
+# +-----------------------------------------------------------------------+
+# |                               sqAFK                                   |
+# |       A simple and lightweight AFK Zone script for BoxPvP servers.    |
+# |         Pure Vanilla Skript - Zero Addons Required (Aternos Ready)    |
+# +-----------------------------------------------------------------------+
+# |  » TUTORIAL: https://github.com/amajd3078/SQAfk   |
+# |  » DISCORD: https://discord.gg/28pTmAYCwH                             |
+# +-----------------------------------------------------------------------+
+
+options:
+    # --- Quick Configuration ---
+    Prefix: &8[&bsqAFK&8] &r
+    Permission: sqafk.admin
+    Permission-Message: &cYou do not have permission to use this command.
+    
+    # --- AFK Timer Settings ---
+    # Time in seconds needed to complete one reward cycle
+    AFK-Time: 600
+    
+    # --- AFK Zone Dimensions ---
+    # Radius expands horizontally and Height expands vertically from the center
+    Zone-Radius: 10
+    Zone-Height: 10
+
+    # --- Rewards System ---
+    # Economy Reward (Set to -1 to disable)
+    Money-Reward: 500
+    
+    # Custom Command Rewards (Set to "none" to disable a slot)
+    # Use <player> as the placeholder for the player's name
+    Cmd-1: "crate give <player> diamond 1"
+    Cmd-2: "none"
+    Cmd-3: "none"
+    Cmd-4: "none"
+    Cmd-5: "none"
+    Cmd-6: "none"
+    Cmd-7: "none"
+    Cmd-8: "none"
+    Cmd-9: "none"
+    Cmd-10: "none"
+
+# -------------------------------------------------------------------------
+# CODE SECTION - DO NOT MODIFY UNLESS YOU KNOW WHAT YOU ARE DOING
+# -------------------------------------------------------------------------
+
+command /sqafk [<text>]:
+    permission: {@Permission}
+    permission message: {@Permission-Message}
+    trigger:
+        if arg-1 is not set:
+            send "&bAvailable Commands:"
+            send " &7/sqafk set &8- &7Set the AFK zone at your current position."
+            send " &7/sqafk remove &8- &7Delete the current AFK zone."
+            send " &7/sqafk reload &8- &7Reload the script configuration."
+            stop
+            
+        if arg-1 is "set":
+            if {sqafk.center} is set:
+                send "{@Prefix}&cAn AFK zone is already set! Please use &e/sqafk remove &cfirst before setting a new one."
+                stop
+            set {sqafk.center} to player's location
+            send "{@Prefix}&aAFK Zone has been successfully set at your location!"
+            send "&7Current Dimensions &8» &eRadius: {@Zone-Radius} &8| &eHeight: {@Zone-Height}"
+            stop
+            
+        if arg-1 is "remove":
+            if {sqafk.center} is not set:
+                send "{@Prefix}&cThere is no active AFK zone to remove. Use &e/sqafk set &cto create one."
+                stop
+            delete {sqafk.center}
+            send "{@Prefix}&eAFK Zone has been successfully removed."
+            stop
+            
+        if arg-1 is "reload":
+            reload script "sqafk"
+            send "{@Prefix}&aScript reloaded successfully!"
+            stop
+            
+        send "{@Prefix}&cUnknown argument. Type &e/sqafk &cfor help."
+
+# -------------------------------------------------------------------------
+# AFK CHECKER, ACTIONBAR & REWARD ENGINE (OPTIMIZED FOR 1-SECOND TICKS)
+# -------------------------------------------------------------------------
+
+every 1 second:
+    if {sqafk.center} is set:
+        loop all players:
+            if distance between loop-player and {sqafk.center} <= {@Zone-Radius}:
+                set {_y-player} to y-coordinate of loop-player
+                set {_y-center} to y-coordinate of {sqafk.center}
+                set {_y-diff} to {_y-player} - {_y-center}
+                if {_y-diff} >= 0:
+                    if {_y-diff} <= {@Zone-Height}:
+                        
+                        if {sqafk.timer::%uuid of loop-player%} is not set:
+                            set {sqafk.timer::%uuid of loop-player%} to 0
+                            
+                        add 1 to {sqafk.timer::%uuid of loop-player%}
+                        set {_current-time} to {sqafk.timer::%uuid of loop-player%}
+                        set {_max-time} to {@AFK-Time}
+                        
+                        set {_percentage} to round(({_current-time} / {_max-time}) * 100)
+                        
+                        send action bar "&b&lAFK ZONE &8| &fProgress: &e%{_percentage}%%% &7(&b%{_current-time}%&7/&b%{_max-time}%s&7)" to loop-player
+                        
+                        if {_current-time} >= {_max-time}:
+                            set {sqafk.timer::%uuid of loop-player%} to 0
+                            
+                            set {_money-amount} to {@Money-Reward}
+                            if {_money-amount} is not -1:
+                                execute console command "eco give %loop-player% %{_money-amount}%"
+                                send "{@Prefix}&aYou received &e$&f%{_money-amount}% &afor being in the AFK zone!" to loop-player
+                                
+                            set {_p} to name of loop-player
+                            
+                            set {_cmd} to {@Cmd-1}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-2}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-3}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-4}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-5}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-6}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-7}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-8}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-9}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                                
+                            set {_cmd} to {@Cmd-10}
+                            if {_cmd} is not "none":
+                                replace all "<player>" with {_p} in {_cmd}
+                                execute console command {_cmd}
+                    else:
+                        if {sqafk.timer::%uuid of loop-player%} is set:
+                            delete {sqafk.timer::%uuid of loop-player%}
+                            send action bar "&c&l&nLeft AFK Zone! Progress Reset." to loop-player
+                else:
+                    if {sqafk.timer::%uuid of loop-player%} is set:
+                        delete {sqafk.timer::%uuid of loop-player%}
+                        send action bar "&c&l&nLeft AFK Zone! Progress Reset." to loop-player
+            else:
+                if {sqafk.timer::%uuid of loop-player%} is set:
+                    delete {sqafk.timer::%uuid of loop-player%}
+                    send action bar "&c&l&nLeft AFK Zone! Progress Reset." to loop-player
+
+on quit:
+    if {sqafk.timer::%uuid of player%} is set:
+        delete {sqafk.timer::%uuid of player%}
