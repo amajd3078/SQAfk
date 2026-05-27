@@ -1,13 +1,13 @@
 # 💎 sqAFK — Dynamic Vanilla AFK Zone Engine
 
-An advanced, ultra-lightweight, and lag-free **AFK Zone** reward engine meticulously designed for **1.21.x** Minecraft **BoxPvP** servers. Engineered with a strict zero-dependency matrix, it delivers a high-fidelity visual experience optimized specifically for **Aternos** environments.
+An advanced, ultra-lightweight, and lag-free **AFK Zone** reward engine meticulously designed for **1.21.x** Minecraft servers. Engineered with a strict zero-dependency matrix, it delivers a high-fidelity visual experience optimized for clean performance.
 
 ---
 
 ## 🎯 What is sqAFK? (Project Objective)
-On resource-constrained environments like Aternos, deploying heavy region management systems (such as WorldGuard or external addon-reliant tools) introduces massive ticking overhead and instability. 
+Deploying heavy region management systems or external addon-reliant tools often introduces massive ticking overhead and instability to Minecraft servers. 
 
-**sqAFK** completely bypasses this limitation. Utilizing **100% Pure Vanilla Skript**, it handles proximity boundary math and distinct vertical plane checking natively. It allows network owners to deploy fully customizable reward regions that automatically adjust their bounding box sizes in real-time, providing an addon-free plugin environment with an elegant visual progression bar.
+**sqAFK** completely bypasses this limitation. Utilizing **100% Pure Vanilla Skript**, it handles proximity boundary math and distinct vertical plane checking natively. It allows network owners to deploy fully customizable reward regions that automatically adjust their bounding box sizes in real-time, providing a clean plugin environment with an elegant visual progression bar.
 
 ---
 
@@ -36,12 +36,12 @@ On resource-constrained environments like Aternos, deploying heavy region manage
 ## 🛠️ Step-by-Step Administrative Tutorial
 
 ### 1️⃣ Initial System Deployment
-* Make sure you have the base **Skript** plugin installed on your 1.21.11 server.
+* Make sure you have the base **Skript** plugin installed on your 1.21.x server.
 * Download the `sqafk.sk` script file from this repository.
 * Place the file into your server directory path: `/plugins/Skript/scripts/`.
 
 ### 2️⃣ Setting Up the Reward Bounding Box
-* Walk into your server's spawn or BoxPvP AFK arena and stand on the precise block you wish to make the **center core**.
+* Walk into your server's spawn or AFK arena and stand on the precise block you wish to make the **center core**.
 * Run the command `/sqafk set`. The system will automatically fetch your coordinate variables and build the 3D zone structure around you.
 
 ### 3️⃣ Editing Parameters & Updating Shapes
@@ -61,7 +61,7 @@ options:
     Permission: sqafk.admin
     Permission-Message: &cYou do not have permission to use this command.
     
-    AFK-Time: 10          # The time loop loop cycle tracker
+    AFK-Time: 10          # The time loop cycle tracker
     Zone-Radius: 4        # Dynamic horizontal radius extension
     Zone-Height: 5        # Dynamic vertical block checking ceiling
     
@@ -80,4 +80,4 @@ options:
 
 ### 📂 Check Out My Other Projects:
 If you like this lightweight engine, check out my full standalone King of the Hill system here:  
-👉 **[SQKoth — King of the Hill System]([https://github.com](https://github.com/amajd3078/SQKoth---King-of-the-hill))**
+👉 **[SQKoth — King of the Hill System](https://github.com)**
