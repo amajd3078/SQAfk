@@ -76,8 +76,8 @@ options:
 ---
 
 ## 🤝 Project Outreach & Links
-*   **Discord Support Guild:** [Join our Official Discord Server]([https://discord.gg](https://discord.gg/28pTmAYCwH))
+*   **Discord Support Guild:** [Join our Official Discord Server](https://discord.gg/28pTmAYCwH)
 
 ### 📂 Check Out My Other Projects:
 If you like this lightweight engine, check out my full standalone King of the Hill system here:  
-👉 **[SQKoth — King of the Hill System]([https://github.com](https://github.com/amajd3078/SQKoth---King-of-the-hill))**
+👉 **[SQKoth — King of the Hill System]([https://github.com](https://github.com/amajd3078/SQKoth---King-of-the-hill)**
